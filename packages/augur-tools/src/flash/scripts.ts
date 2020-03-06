@@ -181,7 +181,7 @@ export function addScripts(flash: FlashSession) {
     async call(this: FlashSession, args: FlashArguments) {
       const target = args.target as string;
       if (this.noProvider()) return;
-      const user = await this.ensureUser();
+      const user = await this.ensureUser(undefined, false, null, null, false, false);
 
       const amount = Number(args.amount);
       const atto = new BigNumber(amount).times(_1_ETH);
