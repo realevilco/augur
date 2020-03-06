@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
 import TooltipStyles from 'modules/common/tooltip.styles.less';
-
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import makePath from 'modules/routes/helpers/make-path';
@@ -11,11 +10,11 @@ import {
   ProcessingButton,
 } from 'modules/common/buttons';
 import { GlobalChat } from 'modules/global-chat/components/global-chat';
+import { NavMenuItem, AccountBalances } from 'modules/types';
+import { helpIcon, Dot } from 'modules/common/icons';
+import { TRANSACTIONS, MIGRATE_FROM_LEG_REP_TOKEN } from 'modules/common/constants';
 
 import Styles from 'modules/app/components/top-nav/top-nav.styles.less';
-import { NavMenuItem } from 'modules/types';
-import { helpIcon, PlusCircleIcon, Dot } from 'modules/common/icons';
-import { MODAL_ADD_FUNDS, MIGRATE_V1_V2 } from 'modules/common/constants';
 
 interface TopNavProps {
   isLogged: boolean;
@@ -24,6 +23,7 @@ interface TopNavProps {
   isDisabled?: boolean;
   migrateV1Rep: Function;
   showMigrateRepButton: boolean;
+  walletBalances: AccountBalances;
   updateModal: Function;
 }
 
@@ -36,7 +36,7 @@ const TopNav = ({
   currentBasePath,
   migrateV1Rep,
   showMigrateRepButton = false,
-  updateModal,
+  walletBalances,
 }: TopNavProps) => {
   const isCurrentItem = item => {
     if (item.route === 'markets' && currentBasePath === 'market') return true;
@@ -74,12 +74,12 @@ const TopNav = ({
                 <li>
                   <div className={Styles.MigrateRep}>
                     <ProcessingButton
-                      text="Migrate V1 to V2 REP"
-                      action={() => migrateV1Rep()}
-                      queueName={MIGRATE_V1_V2}
-                      queueId={MIGRATE_V1_V2}
-                      secondaryButton
-                    />
+                        text={'Migrate V1 to V2 REP'}
+                        action={() => migrateV1Rep()}
+                        queueName={TRANSACTIONS}
+                        queueId={MIGRATE_FROM_LEG_REP_TOKEN}
+                        secondaryButton
+                      />
                   </div>
                   <span>
                     <label
@@ -98,7 +98,9 @@ const TopNav = ({
                     >
                       <p>
                         {
-                          'You have V1 REP in your wallet. Migrate it to V2 REP to use it in Augur V2'
+                          walletBalances.legacyRep > 0
+                            ? 'You have V1 REP in your Augur account address. Migrate it to V2 REP to use it in Augur V2.'
+                            : 'You have V1 REP in your wallet. Migrate it to V2 REP to use it in Augur V2.'
                         }
                       </p>
                     </ReactTooltip>
@@ -123,7 +125,7 @@ const TopNav = ({
         {!isLogged && (
           <div className={Styles.BettingUI}>
             <ExternalLinkText
-              title={'Betting Exchange App'}
+              title={'Betting UI'}
               label={' - Coming Soon!'}
               URL={'https://augur.net'}
             />

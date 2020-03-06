@@ -199,6 +199,7 @@ export interface PendingQueue {
     [pendingId: string]: {
       status: string;
       blockNumber: number;
+      hash: string;
       parameters?: UIOrder | NewMarket;
       data: CreateMarketData;
     };
@@ -250,6 +251,7 @@ export interface MyPositionsSummary {
   totalPercent: FormattedNumber;
   totalReturns: FormattedNumber;
   valueChange: FormattedNumber;
+  valueChange24Hr: FormattedNumber;
 }
 
 export interface Notification {
@@ -266,6 +268,8 @@ export interface Notification {
   markets: string[];
   claimReportingFees?: object;
   totalProceeds?: number;
+  queueName?: string;
+  queueId?: string;
 }
 
 export interface OrderStatus {
@@ -519,29 +523,6 @@ export interface Favorite {
   [marketId: string]: number;
 }
 
-export interface EthereumNodeOptions {
-  blockRetention: number;
-  connectionTimeout: number;
-  http: string;
-  pollingIntervalMilliseconds: number;
-  ws: string;
-}
-
-export interface EnvObject {
-  useWeb3Transport: boolean;
-  'ethereum-node': EthereumNodeOptions;
-  universe?: string;
-  '0x-endpoint'?: string,
-  'gnosis-relay'?: string,
-  sdkEndpoint?: string,
-  debug?: EnvDebugOptions,
-}
-
-export interface EnvDebugOptions {
-  connect: boolean;
-  broadcast: boolean;
-}
-
 export interface QueryEndpoints {
   ethereum_node_http?: string;
   ethereum_node_ws?: string;
@@ -628,6 +609,7 @@ export interface AccountBalances {
   rep: number;
   dai: number;
   legacyRep: number;
+  legacyRepNonSafe: number;
   attoRep: string;
   legacyAttoRep: string;
 }

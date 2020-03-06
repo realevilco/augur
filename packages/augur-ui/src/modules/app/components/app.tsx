@@ -38,8 +38,8 @@ import {
   Universe,
   Blockchain,
   LoginAccount,
-  EnvObject,
   Notification,
+  AccountBalances,
 } from 'modules/types';
 import ForkingBanner from 'modules/reporting/containers/forking-banner';
 import parseQuery, { parseLocation } from 'modules/routes/helpers/parse-query';
@@ -48,11 +48,12 @@ import makePath from 'modules/routes/helpers/make-path';
 import { ExternalLinkText } from 'modules/common/buttons';
 import { HelmetTag } from 'modules/seo/helmet-tag';
 import { APP_HEAD_TAGS } from 'modules/seo/helmet-configs';
+import { SDKConfiguration } from '@augurproject/artifacts';
 
 interface AppProps {
   notifications: Notification[];
   blockchain: Blockchain;
-  env: EnvObject;
+  config: SDKConfiguration;
   history: History;
   initAugur: Function;
   isLogged: boolean;
@@ -88,8 +89,9 @@ interface AppProps {
   isHelpMenuOpen: boolean;
   showGlobalChat: Function;
   migrateV1Rep: Function;
-  showMigrateRepButton: boolean;
+  walletBalances: AccountBalances;
   saveAffilateAddress: Function;
+  showMigrateRepButton: boolean;
 }
 
 export default class AppView extends Component<AppProps> {
@@ -364,11 +366,12 @@ export default class AppView extends Component<AppProps> {
       isConnectionTrayOpen,
       updateConnectionTray,
       migrateV1Rep,
-      showMigrateRepButton,
+      walletBalances,
       updateModal,
       isHelpMenuOpen,
       updateHelpMenuState,
       notifications,
+      showMigrateRepButton,
     } = this.props;
     this.sideNavMenuData[1].showAlert =
       notifications.filter(item => item.isNew).length > 0;
@@ -450,6 +453,7 @@ export default class AppView extends Component<AppProps> {
                 showGlobalChat={() => this.props.showGlobalChat()}
                 migrateV1Rep={migrateV1Rep}
                 showMigrateRepButton={showMigrateRepButton}
+                walletBalances={walletBalances}
                 updateModal={updateModal}
               />
 
@@ -460,6 +464,7 @@ export default class AppView extends Component<AppProps> {
                 currentBasePath={sidebarStatus.currentBasePath}
                 migrateV1Rep={migrateV1Rep}
                 showMigrateRepButton={showMigrateRepButton}
+                walletBalances={walletBalances}
                 updateModal={updateModal}
               />
             </section>
@@ -505,7 +510,7 @@ export default class AppView extends Component<AppProps> {
                 {!isLogged && (
                   <div className={Styles.BettingUI}>
                     <ExternalLinkText
-                      title={'Betting Exchange App'}
+                      title={'Betting UI'}
                       label={' - Coming Soon!'}
                       URL={'https://augur.net'}
                     />

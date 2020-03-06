@@ -11,6 +11,60 @@
   &:disabled {
     cursor: @button-cursor-disabled;
   }
+
+  &.Confirmed {
+    color: @color-primary-text;
+    background: fade(@color-positive, 20%);
+    border: 1px solid @color-positive;
+    border-radius: @border-radius-default;
+    &:hover:enabled {
+      background: fade(@color-positive, 20%);
+    }
+
+    &:focus:enabled {
+      background: fade(@color-positive, 20%);
+    }
+
+    &:active:enabled {
+      background: fade(@color-positive, 20%);
+    }
+    > svg {
+      width: @size-8;
+      height: @size-8;
+      margin-left: @size-8;
+
+      > path {
+        stroke: @color-primary-text;
+      }
+    }
+  }
+
+  &.Failed {
+    color: @color-primary-text;
+    background: fade(@color-error, 20%);
+    border: 1px solid @color-error;
+    border-radius: @border-radius-default;
+    &:hover:enabled {
+      background: fade(@color-error, 20%);
+    }
+
+    &:focus:enabled {
+      background: fade(@color-error, 20%);
+    }
+
+    &:active:enabled {
+      background: fade(@color-error, 20%);
+    }
+    > svg {
+      width: @size-8;
+      height: @size-8;
+      margin-left: @size-8;
+
+      > path {
+        stroke: @color-primary-text;
+      }
+    }
+  }
 }
 
 .PrimaryButton {
@@ -206,11 +260,9 @@
   }
 
   > svg {
-    fill: none;
     height: @size-12;
     width: @size-12;
-    display: flex;
-    
+
     > rect {
       fill: @color-primary-text;
       height: 1px;
@@ -381,6 +433,7 @@
 }
 
 .CancelTextButton {
+  .Button;
   .mono-10-semi-bold;
 
   align-items: center;
@@ -623,7 +676,7 @@
   > span > a {
     display: flex;
   }
-  
+
   > span > a > svg,
   > span > span > svg {
     fill: none;
@@ -703,17 +756,6 @@
     height: @size-12;
     margin-left: @size-4;
     margin-top: @size-2;
-
-    > path {
-      &:nth-child(odd) {
-        fill: @color-secondary-text;
-        stroke: none;
-      }
-
-      &:nth-child(even) {
-        stroke: @color-secondary-text;
-      }
-    }
   }
 }
 
@@ -737,6 +779,9 @@
 
   > svg {
     margin-left: @size-4;
+    height: @size-10;
+    width: @size-10;
+
     > path {
       &:nth-child(odd) {
         fill: @color-primary-action;
